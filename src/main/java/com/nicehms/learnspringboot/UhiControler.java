@@ -6,7 +6,6 @@ import java.security.PublicKey;
 import java.util.Base64;
 import java.util.Map;
 
-import org.bouncycastle.jcajce.spec.EdDSAParameterSpec;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,18 +35,11 @@ public class UhiControler {
 		try {
 			var crypt = new Crypt();
 //			Verify date
-			// String hashedSigningString = crypt
-			// 		.generateBlakeHash(crypt.getSigningString(Long.valueOf(created), Long.valueOf(expires), data));
 			String hashedSigningString = crypt.generateBlakeHash(
 				crypt.getSigningString(Long.parseLong(created), Long.parseLong(expires), data));
 
 			PublicKey pub_key = Crypt.getPublicKey("Ed25519", Base64.getDecoder().decode(publicKey));
 			boolean ret = crypt.verifySignature(hashedSigningString, signature, "Ed25519",pub_key);
-
-					
-			// boolean ret = crypt.verifySignature(hashedSigningString, signature,EdDSAParameterSpec.Ed25519, publicKey );
-	
-			
 			return ret;
 			
 		} catch (Exception e) {
