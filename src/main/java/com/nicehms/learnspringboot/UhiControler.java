@@ -6,6 +6,7 @@ import java.security.PublicKey;
 import java.util.Base64;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,11 +21,12 @@ public class UhiControler {
 	}
 
 	@RequestMapping("uhi/generateAuthorizationHeader")
-	public String generateAuthorizationParams(String subscriberId, String pubKeyId, String payload, String privateKey)
+	public String generateAuthorizationParams(@RequestBody RequestModel requestModel)
 			throws Exception {
 		var cryto = new Crypt();
-		PrivateKey curKey = cryto.getPrivateKey("Ed25519", Base64.getDecoder().decode(privateKey));
-		var header = cryto.generateAuthorizationParams(subscriberId, pubKeyId, payload, curKey);
+		PrivateKey curKey = cryto.getPrivateKey("Ed25519", Base64.getDecoder().decode(requestModel.getPrivateKey()));
+		var header = cryto.generateAuthorizationParams(requestModel.getSubscriberId(), requestModel.getPubKeyId(),
+				requestModel.getPayload(), curKey);
 		return header;
 
 	}
