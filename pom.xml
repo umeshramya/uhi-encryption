@@ -57,18 +57,17 @@
 		</dependency>
 	</dependencies>
 
-	<plugin>
-	<groupId>com.google.cloud.tools</groupId>
-	<artifactId>appengine-maven-plugin</artifactId>
-	<version>2.7.0</version>
-	</plugin>
-
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+				<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>appengine-maven-plugin</artifactId>
+				<version>2.7.0</version>
+				</plugin>
 		</plugins>
 	</build>
 
